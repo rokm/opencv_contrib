@@ -334,7 +334,7 @@ void SURF_OCL::downloadKeypoints(const UMat &keypointsGPU, std::vector<KeyPoint>
             KeyPoint &kp = keypoints[i];
             kp.pt.x = kp_x[i];
             kp.pt.y = kp_y[i];
-            kp.class_id = kp_laplacian[i];
+            /*kp.class_id = kp_laplacian[i];*/
             kp.octave = kp_octave[i];
             kp.size = kp_size[i];
             kp.angle = kp_dir[i];

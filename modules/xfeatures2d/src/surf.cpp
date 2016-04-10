@@ -373,7 +373,7 @@ void SURFFindInvoker::findMaximaInLayer( const Mat& sum, const Mat& mask_sum,
     for( int i = margin; i < layer_rows - margin; i++ )
     {
         const float* det_ptr = dets[layer].ptr<float>(i);
-        const float* trace_ptr = traces[layer].ptr<float>(i);
+        /*const float* trace_ptr = traces[layer].ptr<float>(i);*/
         for( int j = margin; j < layer_cols-margin; j++ )
         {
             float val0 = det_ptr[j];
@@ -426,7 +426,7 @@ void SURFFindInvoker::findMaximaInLayer( const Mat& sum, const Mat& mask_sum,
                     float center_j = sum_j + (size-1)*0.5f;
 
                     KeyPoint kpt( center_j, center_i, (float)sizes[layer],
-                                  -1, val0, octave, (trace_ptr[j] > 0) - (trace_ptr[j] < 0) );
+                                  -1, val0, octave/*, (trace_ptr[j] > 0) - (trace_ptr[j] < 0) */);
 
                     /* Interpolate maxima location within the 3x3x3 neighbourhood  */
                     int ds = size - sizes[layer-1];
@@ -1004,7 +1004,7 @@ Ptr<SURF> SURF::create(double _threshold, int _nOctaves, int _nOctaveLayers, boo
 {
     return makePtr<SURF_Impl>(_threshold, _nOctaves, _nOctaveLayers, _extended, _upright);
 }
-    
+
 }
 }
 
