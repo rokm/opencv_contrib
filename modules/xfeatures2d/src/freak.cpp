@@ -131,7 +131,7 @@ protected:
         int weight_dx; // dx/(norm_sq))*4096
         int weight_dy; // dy/(norm_sq))*4096
     };
-    
+
     std::vector<PatternPoint> patternLookup; // look-up table for the pattern points (position+sigma of all points at all scales and orientation)
     int patternSizes[NB_SCALES]; // size of the pattern at a specific scale (used to check if a point is within image boundaries)
     DescriptionPair descriptionPairs[NB_PAIRS];
@@ -333,8 +333,11 @@ void FREAK_Impl::compute( InputArray _image, std::vector<KeyPoint>& keypoints, O
     ((FREAK_Impl*)this)->buildPattern();
 
     // Convert to gray if not already
-    Mat grayImage = image;
-    CV_Assert(grayImage.channels() == 1);
+    Mat grayImage;
+    if( image.channels() > 1 )
+        cvtColor( image, grayImage, COLOR_BGR2GRAY );
+    else
+        grayImage = image;
 
     // Use 32-bit integers if we won't overflow in the integral image
     if ((image.depth() == CV_8U || image.depth() == CV_8S) &&
